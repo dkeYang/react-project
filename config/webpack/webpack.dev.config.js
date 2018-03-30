@@ -31,31 +31,32 @@ let config = merge(baseWebpackConfig, {
     module: {
         rules: [{
             test: /\.(js|jsx)$/,
-            use: ['babel-loader'],
+            use: 'babel-loader',
             include: [
                 path.resolve(__dirname, "../../app"),
-                path.resolve(__dirname, "../../app"),
+                path.resolve(__dirname, "../../entryBuild"),
             ],
             exclude: [
                 path.resolve(__dirname, "../../node_modules")
             ],
-        }]
+        },
+       ]
     },
 
     // 设置api转发
     devServer: {
-        host: '0.0.0.0',
+        host: '127.0.0.1',
         port: 8080,
         hot: true,
         inline: true,
         contentBase: path.resolve(webpackFile.devDirectory),
         historyApiFallback: true,
         disableHostCheck: true,
-        proxy: [{
-            context: ['/api/**', '/u/**/'],
-            target: "http://a92.168.12.100:8080",
-            secure: false
-        }],
+        // proxy: [{
+        //     context: ['/api/**', '/u/**/'],
+        //     target: "http://192.168.12.100:8080",
+        //     secure: false
+        // }],
         after() {
             opn('http://localhost:' + this.port)
         }

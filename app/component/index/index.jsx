@@ -8,7 +8,7 @@ class Index extends React.Component {
 
     tick() {
         this.setState(preState => ({
-            seconds: preState.seconds++
+            seconds: preState.seconds + 1
         }))
     }
 
@@ -18,9 +18,6 @@ class Index extends React.Component {
 
     componentWillUnmount() {
         clearInterval(this.timerId);
-        this.setState(preState => ({
-            seconds: 0
-        }));
     }
 
     render() {
