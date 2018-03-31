@@ -12,12 +12,7 @@ let config = merge(baseWebpackConfig, {
         chunkFilename: 'js/[name]-[id].js',
         publicPath: ''
     },
-    
-    optimization:{
-        splitChunks:{
 
-        }
-    },
 
     // 插件配置
     plugins: [
@@ -30,11 +25,11 @@ let config = merge(baseWebpackConfig, {
         //设置热更新
         new webpack.HotModuleReplacementPlugin(),
         // common 业务公共代码，vendor引入第三方
-        // new config.optimization.splitChunks({
+        // new webpack.optimize.CommonsChunkPlugin({
         //     name:['common',"vendor"]
         // }),
         // // 防止vendor hash变化
-        // new config.optimization.splitChunks({
+        // new webpack.optimize.CommonsChunkPlugin({
         //     name:'manifest',
         //     chunks:['vendor']
         // })
