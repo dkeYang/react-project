@@ -30,17 +30,57 @@ let config = merge(baseWebpackConfig, {
     // loader配置
     module: {
         rules: [{
-            test: /\.(js|jsx)$/,
-            use: 'babel-loader',
-            include: [
-                path.resolve(__dirname, "../../app"),
-                path.resolve(__dirname, "../../entryBuild"),
-            ],
-            exclude: [
-                path.resolve(__dirname, "../../node_modules")
-            ],
-        },
-       ]
+                test: /\.(js|jsx)$/,
+                use: 'babel-loader',
+                include: [
+                    path.resolve(__dirname, "../../app"),
+                    path.resolve(__dirname, "../../entryBuild"),
+                ],
+                exclude: [
+                    path.resolve(__dirname, "../../node_modules")
+                ],
+            },
+            {
+                test: /\.(css|pcss)$/,
+                use: [{
+                        loader: "style-loader",
+                        options: {
+                            sourceMap: true,
+                        }
+                    },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            sourceMap: true,
+                        }
+                    },
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            sourceMap: true,
+                            config: {
+                                path: "postcss.config.js"
+                            }
+                        }
+                    }
+                ],
+                exclude: [
+                    path.resolve(__dirname, "../../node_modules")
+                ],
+            },
+            {
+                test:/\.(png|jpg|gif|ttf|eot|woff|woff2|svg|swf)$/,
+                use:[
+                    {
+                        loader:'file-loader',
+                        query:{
+                            name:"[name].[ext]",
+                            outputPath:`${webpackFile.resource}/`
+                        }
+                    }
+                ]
+            }
+        ]
     },
 
     // 设置api转发
@@ -49,7 +89,7 @@ let config = merge(baseWebpackConfig, {
         port: 8080,
         hot: true,
         inline: true,
-        contentBase: path.resolve(webpackFile.devDirectory),
+        contentBase: path.resolve(__dirname, "../../app/build"),
         historyApiFallback: true,
         disableHostCheck: true,
         // proxy: [{

@@ -1,4 +1,5 @@
 import React from "react";
+import "../../public/css/index.pcss"
 
 class Index extends React.Component {
     constructor(props) {
@@ -22,10 +23,16 @@ class Index extends React.Component {
 
     render() {
         return (
-            <div>
-                this is the index :
-                Seconds:{this.state.seconds}
+            <div className="cont">
+               <div className="wife"></div>
+                <div className="top">
+                    this is the index :
+                </div>
+                <div className="bottom">
+                    Seconds:{this.state.seconds}
+                </div>
             </div>
+
         );
     }
 }
