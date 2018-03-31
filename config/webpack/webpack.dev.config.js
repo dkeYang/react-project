@@ -12,7 +12,12 @@ let config = merge(baseWebpackConfig, {
         chunkFilename: 'js/[name]-[id].js',
         publicPath: ''
     },
+    
+    optimization:{
+        splitChunks:{
 
+        }
+    },
 
     // 插件配置
     plugins: [
@@ -24,6 +29,15 @@ let config = merge(baseWebpackConfig, {
         }),
         //设置热更新
         new webpack.HotModuleReplacementPlugin(),
+        // common 业务公共代码，vendor引入第三方
+        // new config.optimization.splitChunks({
+        //     name:['common',"vendor"]
+        // }),
+        // // 防止vendor hash变化
+        // new config.optimization.splitChunks({
+        //     name:'manifest',
+        //     chunks:['vendor']
+        // })
     ],
 
 
@@ -31,7 +45,7 @@ let config = merge(baseWebpackConfig, {
     module: {
         rules: [{
                 test: /\.(js|jsx)$/,
-                use: 'babel-loader',
+                use: ['cache-loader','babel-loader'],/*打包速度优化*/
                 include: [
                     path.resolve(__dirname, "../../app"),
                     path.resolve(__dirname, "../../entryBuild"),
@@ -92,11 +106,11 @@ let config = merge(baseWebpackConfig, {
         contentBase: path.resolve(__dirname, "../../app/build"),
         historyApiFallback: true,
         disableHostCheck: true,
-        // proxy: [{
-        //     context: ['/api/**', '/u/**/'],
-        //     target: "http://192.168.12.100:8080",
-        //     secure: false
-        // }],
+        proxy: [{
+            context: ['/api/**', '/u/**/'],
+            target: "http://192.168.12.100:8080",
+            secure: false
+        }],
         after() {
             opn('http://localhost:' + this.port)
         }
