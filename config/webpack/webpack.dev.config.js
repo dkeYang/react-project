@@ -40,7 +40,8 @@ let config = merge(baseWebpackConfig, {
     module: {
         rules: [{
                 test: /\.(js|jsx)$/,
-                use: ['cache-loader','babel-loader'],/*打包速度优化*/
+                use: ['cache-loader', 'babel-loader'],
+                /*打包速度优化*/
                 include: [
                     path.resolve(__dirname, "../../app"),
                     path.resolve(__dirname, "../../entryBuild"),
@@ -77,17 +78,16 @@ let config = merge(baseWebpackConfig, {
                     path.resolve(__dirname, "../../node_modules")
                 ],
             },
+            // file-loader 配置文件解析器
             {
-                test:/\.(png|jpg|gif|ttf|eot|woff|woff2|svg|swf)$/,
-                use:[
-                    {
-                        loader:'file-loader',
-                        query:{
-                            name:"[name].[ext]",
-                            outputPath:`${webpackFile.resource}/`
-                        }
+                test: /\.(png|jpg|gif|ttf|eot|woff|woff2|svg|swf)$/,
+                use: [{
+                    loader: 'file-loader',
+                    query: {
+                        name: "[name].[ext]",
+                        outputPath: `${webpackFile.resource}/`
                     }
-                ]
+                }]
             }
         ]
     },
